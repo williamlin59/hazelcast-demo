@@ -21,7 +21,7 @@ public class SampleController {
 
     @PostMapping(value = "/sample", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Mono<HttpEntity<HttpStatus>> sample(@RequestBody Mono<SampleResource> sampleResourceMono) {
-        return sampleResourceService.handleSampleResource.apply(sampleResourceMono).thenReturn(ResponseEntity.ok().build());
+        return sampleResourceMono.flatMap(sampleResource -> sampleResourceService.handleSampleResource.apply(sampleResource)).thenReturn(ResponseEntity.ok().build());
     }
 
     @GetMapping(value = "/sample")
